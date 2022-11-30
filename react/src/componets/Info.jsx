@@ -65,8 +65,8 @@ const Info = () => {
         fetch(`http://localhost:8080/${path}${file.fileName}`, {
             method: "DELETE",
         })
-            .then(response => response.json())
-            .then(json => console.log(json));
+            .then(response => response.text())
+            .then(json => alert(json));
     }
 
     const copyFile = (file) => {
@@ -86,7 +86,7 @@ const goUp = ()=>{
     return (
         <div>
             <h3> list of files</h3>
-            <h4>location {path} { path!=='/' && <button onClick={goUp}>up</button>}</h4>
+            <h4>location {path} { path!=='/' && <button onClick={goUp}>go back</button>}</h4>
             {<table id="customers">
             <tbody>
                     <tr><th>folders</th></tr>

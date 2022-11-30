@@ -49,16 +49,22 @@ app.route('*')
             , function (err) {
                 if (err) console.log('ERROR: ' + err);
                 res.send(JSON.stringify('changd'))
-            });
+            })
     }).delete((req, res) => {
-        const path = decodeURI(`${req.url}`) 
+        const path = decodeURI(`${req.url}`)
         let deleteType = path.includes(".") ? fs.unlink : fs.rmdir
-        deleteType(`./public/${path}`, function (err) {
-            if (err) throw err;
-            console.log('File deleted!');
-            res.send(JSON.stringify('File deleted!'))
-        });
-    // }).post(uploder.single('myFile'), (req, res) => {
+        try {
+            deleteType(`./public/${path}`, function (err) {
+                if (err) {
+                  res.status(403).send(err.message)
+                } else{
+                  res.send(JSON.stringify('File deleted!'))  
+                }   
+            })
+        } catch (err) {
+            console.log(err);
+        }
+
     }).post((req, res) => {
         const path = `${req.url}`
         fs.copyFile(decodeURI(`./public/${path}`), increment(decodeURI(`./public/${path}`), { fs: true }), (err) => {
@@ -77,10 +83,10 @@ app.route('*')
 const port = process.env.PORT || 8080
 app.listen(port, () => console.log(`listen on port ${port}`))
 
-
+    // }).post(uploder.single('myFile'), (req, res) => {
 // const element = document.getElementById('inputFile')
 // element.oncange = (e)=>{
 //    const file = e.target.files[0]
 // const data = new FormData()
-// data.append('myFile', file) 
+// data.append('myFile', file)
 // }
