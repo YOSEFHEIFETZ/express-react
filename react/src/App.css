@@ -1,0 +1,81 @@
+body {
+  text-align: center;
+}
+
+nav {
+  background-color: rgb(162, 213, 248);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 15vh;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 550; 
+}
+
+h3{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#login{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  text-align: center;
+  width:  200px;
+  height: 200px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  background-color: rgb(219, 211, 202);
+}
+
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #0468aa;
+  color: white;
+}
+
+
+#customers2 {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#customers2 td, #customers2 th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers2 tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers2 tr:hover {background-color: #ddd;}
+
+#customers2 th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #aa8104;
+  color: white;
+}
+

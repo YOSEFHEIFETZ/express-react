@@ -1,0 +1,102 @@
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+// variables
+const screenWidth = 1000;
+const screenHeight = 500;
+const characterWidth = 50;
+const characterHeight = 50;
+
+class GameCharacter{
+    constructor(xValue, yValue, widthValue, heightValue, speedValue, colorValue){
+        this.x = xValue;
+        this.y = yValue;
+        this.width = widthValue;
+        this.height = heightValue;
+        this.speed = speedValue;
+        this.color = colorValue;
+    }
+    moveY(){
+        this.y += this.speed;
+        if(this.y > screenHeight-this.height || this.y < 0){
+            this.speed *= -1;
+        }
+    }
+    moveX(){
+        this.x += this.speed;
+    }
+}
+
+const player = new GameCharacter(20, screenHeight/2-characterHeight/2, characterWidth, characterHeight, 0, "green");
+const flag = new GameCharacter(screenWidth - characterWidth, screenHeight/2-characterHeight/2, characterWidth, characterHeight, 0, "orange");
+
+const enemies = [
+    new GameCharacter(200, 50, characterWidth, characterHeight, 3, "red"),
+    new GameCharacter(400, 200, characterWidth, characterHeight, 2, "red"),
+    new GameCharacter(600, 50, characterWidth, characterHeight, 4, "red"),
+    new GameCharacter(800, 250, characterWidth, characterHeight, 1, "red")
+];
+
+document.addEventListener("keydown", e => {
+    // console.log(e);
+    switch(e.key){
+        case "ArrowRight":
+            player.speed = 2;
+            break;
+        case "ArrowLeft":
+            player.speed = -2;
+            break;
+    }
+});
+
+document.addEventListener("keyup", e => {
+    // console.log(e);
+    player.speed = 0;
+});
+
+function checkCollision(rect1, rect2){
+    const conditionX = rect1.x + characterWidth >= rect2.x && rect1.x < rect2.x + characterWidth;
+    const conditionY = rect1.y + characterHeight >= rect2.y && rect1.y < rect2.y + characterHeight;
+    if(conditionX && conditionY){
+        return true;
+    }
+    // else{
+    //     return false;
+    // }
+}
+
+function step(){
+    // console.log("loop");
+    update();
+    draw();
+    window.requestAnimationFrame(step);
+}
+
+function update(){
+    player.moveX();
+    for(let enemy of enemies){
+        if(checkCollision(player, enemy) == true){
+            console.log("Collision!");
+        }
+        enemy.moveY();
+    }
+    if(checkCollision(player, flag)){
+        console.log("Win!");
+    }
+}
+
+function draw(){
+    ctx.clearRect(0, 0, screenWidth, screenHeight);
+    
+    ctx.fillStyle = player.color;
+    ctx.fillRect(player.x, player.y, player.width, player.height);
+
+    ctx.fillStyle = flag.color;
+    ctx.fillRect(flag.x, flag.y, flag.width, flag.height);
+
+    for(let enemy of enemies){
+        ctx.fillStyle = enemy.color;
+        ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+    }
+}
+
+step();
